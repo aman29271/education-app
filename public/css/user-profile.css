@@ -1,0 +1,34 @@
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.navbar-brand {
+    font-size: 30px;
+    font-weight: 900;
+}
+
+.profile-pic {
+    width: 150px;
+    height: 150px;
+    margin-bottom: 20px;
+    background-color: #bbbbbb;
+    cursor: pointer;
+}
+
+.profile-pic:focus {
+    border: 2px solid #eeeeee;
+}
+
+.profile-pic i {
+    line-height: 150px;
+}
+
+.video button {
+    background-color: #bbbbbb;
+}
+
+.video button:hover, .profile-pic:hover {
+    background-color: #8e8e8e;
+}
