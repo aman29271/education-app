@@ -2,7 +2,6 @@ const React = require('react');
 
 // components
 const CommonCSS = require('./components/commonCSS');
-const CommonJS = require('./components/commonJS');
 const Navbar = require('./components/navbar');
 const Subjects = require('./components/subjects');
 const TeacherList = require('./components/teacherList');
@@ -19,7 +18,6 @@ const Index = () => {
       <div className="container">
         <TeacherList data={[1]} />
       </div>
-      <CommonJS />
     </Layout>
   );
 };

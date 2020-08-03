@@ -2,29 +2,67 @@ const React = require('react');
 
 // components
 const CommonCSS = require('./components/commonCSS');
-const CommonJS = require('./components/commonJS');
 const Layout = require('./components/layout');
 
-const Register = () => {
+const Register = ({ errors, message }) => {
   return (
     <Layout title="Register Here">
       <CommonCSS />
       <link href="/css/main.css" rel="stylesheet" />
-
       <div className="container">
         <div className="row">
           <div className="col-md-5 mx-auto shadow my-5">
             <h1 className="text-center p-4 border-bottom font-weight-bold text-info">Register</h1>
-
-            <form className="form-horizontal px-5 py-4" role="form">
+            {errors.msg
+              ? errors.msg.map((msg) => (
+                  <p style={{ color: 'red' }} className="text-center" key={msg}>
+                    {msg}
+                  </p>
+                ))
+              : null}
+            {message ? (
+              <p style={{ color: 'green' }} className="text-center">
+                {message} <a href="/login">Login Here</a>
+              </p>
+            ) : null}
+            <p style={{ color: 'red', display: 'none' }} id="message" className="text-center"></p>
+            <form
+              className="form-horizontal px-5 py-4"
+              role="form"
+              method="post"
+              action="/register/verify"
+            >
               <div className="form-group">
                 <div className="col-md-12 p-0">
-                  <input className="form-control" type="text" placeholder="Name" />
+                  <input
+                    className="form-control"
+                    type="text"
+                    placeholder="First Name"
+                    name="firstName"
+                    required
+                  />
                 </div>
               </div>
               <div className="form-group">
                 <div className="col-md-12 p-0">
-                  <input className="form-control" type="text" placeholder="Email ID" />
+                  <input
+                    className="form-control"
+                    type="text"
+                    placeholder="Last Name"
+                    name="lastName"
+                    required
+                  />
+                </div>
+              </div>
+              <div className="form-group">
+                <div className="col-md-12 p-0">
+                  <input
+                    className="form-control"
+                    type="email"
+                    placeholder="Email ID"
+                    name="email"
+                    required
+                  />
                 </div>
               </div>
               <div className="form-check form-check-inline col-md-6 m-0 p-0 pl-5 mb-3">
@@ -33,26 +71,26 @@ const Register = () => {
                   type="radio"
                   name="exampleRadios"
                   id="professional"
-                  value="option1"
+                  name="category"
+                  defaultChecked
                 />
                 <label className="form-check-label" htmlFor="professional">
-                  Professional
+                  Teacher
                 </label>
               </div>
               <div className="form-check form-check-inline col-md-5 col-lg-5 m-0 p-0 pl-4 mb-3">
-                <input
-                  className="form-check-input"
-                  type="radio"
-                  name="exampleRadios"
-                  id="follower"
-                  value="option2"
-                />
+                <input className="form-check-input" type="radio" id="follower" name="category" />
                 <label className="form-check-label" htmlFor="follower">
-                  Follower
+                  Student
                 </label>
               </div>
-              <select className="form-control mb-3" id="countryList" style={{ display: 'none' }}>
-                <option> -- Select Country -- </option>
+              <select
+                className="form-control mb-3"
+                id="countryList"
+                style={{ display: 'none' }}
+                name="country"
+              >
+                <option></option>
                 <option>Australia</option>
                 <option>Canada</option>
                 <option>Germany</option>
@@ -64,32 +102,35 @@ const Register = () => {
                 <option>United Kingdom</option>
                 <option>United States</option>
               </select>
-              <select className="form-control mb-3" id="subjectList" style={{ display: 'none' }}>
-                <option> -- Select Subject -- </option>
-                <option>Star</option>
-                <option>Teacher</option>
-                <option>Doctor</option>
-                <option>Gym</option>
-                <option>Yoga</option>
-                <option>Chef</option>
-                <option>Gamer</option>
-                <option>Artist</option>
-                <option>Fashion</option>
-                <option>Farmer</option>
-              </select>
               <div className="form-group">
                 <div className="col-md-12 p-0">
-                  <input className="form-control" type="password" placeholder="Password" />
+                  <input
+                    className="form-control"
+                    type="password"
+                    placeholder="Password"
+                    name="password"
+                    id="password"
+                    required
+                    minLength="6"
+                  />
                 </div>
               </div>
               <div className="form-group">
                 <div className="col-md-12 p-0">
-                  <input className="form-control" type="password" placeholder="Confirm Password" />
+                  <input
+                    className="form-control"
+                    type="password"
+                    id="confirm_password"
+                    placeholder="Confirm Password"
+                    name="confirm_password"
+                    required
+                    minLength="6"
+                  />
                 </div>
               </div>
               <div className="form-group">
                 <div className="col-md-12 text-center">
-                  <input type="button" className="btn btn-primary" value="Register" />
+                  <input type="submit" className="btn btn-primary" value="Register" id="submit" />
                 </div>
               </div>
             </form>
@@ -97,29 +138,7 @@ const Register = () => {
         </div>
       </div>
       <hr />
-      <script
-        dangerouslySetInnerHTML={{
-          __html: ` 
-    document.getElementById('professional').addEventListener('click',showSubjectList);
-    document.getElementById('follower').addEventListener('click',showCountryList);
-    function showSubjectList() {
-    const professional = document.getElementById('professional');
-    const subject = document.getElementById('subjectList');
-    subject.style.display = professional.checked ? 'block' : 'none';
-    var country = document.getElementById('countryList');
-    country.style.display = 'none';
-  }
-
-  function showCountryList() {
-    var follower = document.getElementById('follower');
-    var country = document.getElementById('countryList');
-    country.style.display = follower.checked ? 'block' : 'none';
-    var subject = document.getElementById('subjectList');
-    subject.style.display = 'none';
-  }`,
-        }}
-      />
-      <CommonJS />
+      <script src="/js/register.js"></script>
     </Layout>
   );
 };

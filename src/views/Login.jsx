@@ -2,10 +2,9 @@ const React = require('react');
 
 // components
 const CommonCSS = require('./components/commonCSS');
-const CommonJS = require('./components/commonJS');
 const Layout = require('./components/layout');
 
-const Login = () => {
+const Login = ({ message }) => {
   return (
     <Layout title="Login Here">
       <CommonCSS />
@@ -18,18 +17,63 @@ const Login = () => {
         >
           <div className="login-form col-md-4 col-lg-4 shadow p-2 text-center border">
             <h2 className="text-center font-weight-bold mb-3 py-1 bg-light text-info">Login</h2>
-            <form className="form-horizontal px-1" role="form">
+            {message ? (
+              <p className="text-center" style={{ color: 'red' }}>
+                {message}
+              </p>
+            ) : null}
+            <form className="form-horizontal px-1" role="form" method="post" action="/login/verify">
               <div className="form-group">
                 <div className="col-md-12">
-                  <input className="form-control" type="text" placeholder="Username" />
+                  <input
+                    className="form-control"
+                    type="text"
+                    placeholder="Username"
+                    name="username"
+                    required
+                  />
                 </div>
               </div>
               <div className="form-group">
                 <div className="col-md-12">
-                  <input className="form-control" type="password" placeholder="Password" />
+                  <input
+                    required
+                    className="form-control"
+                    type="password"
+                    placeholder="Password"
+                    name="password"
+                  />
                 </div>
               </div>
-              <input type="button" className="btn btn-success" value="Submit" />
+              <p> Are you a student ?</p>
+              <div className="form-check form-check-inline col-md-5 col-lg-5 m-0 p-0 pl-4 mb-3">
+                <input
+                  className="form-check-input"
+                  type="radio"
+                  id="teacher"
+                  name="student"
+                  value="true"
+                  defaultChecked
+                />
+                <label className="form-check-label" htmlFor="teacher">
+                  Yes
+                </label>
+              </div>
+              <div className="form-check form-check-inline col-md-5 col-lg-5 m-0 p-0 pl-4 mb-3">
+                <input
+                  className="form-check-input"
+                  type="radio"
+                  id="student"
+                  name="student"
+                  value="false"
+                />
+                <label className="form-check-label" htmlFor="student">
+                  No
+                </label>
+              </div>
+              <div className="form-group">
+                <input type="submit" className="btn btn-success" value="Submit" />
+              </div>
             </form>
             <div
               className="form-check d-flex justify-content-between align-items-center border-bottom"
@@ -61,7 +105,6 @@ const Login = () => {
           </div>
         </div>
       </div>
-      <CommonJS />
     </Layout>
   );
 };
