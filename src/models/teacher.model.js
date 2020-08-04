@@ -34,7 +34,7 @@ const teacherSchema = new Schema(
       type: String,
       required: true,
     },
-    followers: [{ type: Schema.Types.ObjectId, ref: 'Student', unique: true }],
+    followers: [{ type: Schema.Types.ObjectId, ref: 'Student' }],
     languages: String,
     skills: String,
     message: String,

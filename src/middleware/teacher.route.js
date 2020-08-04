@@ -42,7 +42,7 @@ router.route('/verify').post(routes, strictStudent, async (req, res) => {
 router.route('/settings/change-password').post(routes, strictStudent, changePassword(Teacher));
 
 function checkformFilled(obj) {
-  if (obj.city !== '') {
+  if (typeof obj.city !== 'undefined') {
     return { isFilled: true };
   } else {
     return { isFilled: false };
