@@ -72,25 +72,47 @@ const Register = ({ errors, message }) => {
                   name="exampleRadios"
                   id="professional"
                   name="category"
-                  defaultChecked
+                  value="teacher"
                 />
                 <label className="form-check-label" htmlFor="professional">
                   Teacher
                 </label>
               </div>
               <div className="form-check form-check-inline col-md-5 col-lg-5 m-0 p-0 pl-4 mb-3">
-                <input className="form-check-input" type="radio" id="follower" name="category" />
+                <input
+                  className="form-check-input"
+                  type="radio"
+                  id="follower"
+                  name="category"
+                  value="student"
+                />
                 <label className="form-check-label" htmlFor="follower">
                   Student
                 </label>
               </div>
               <select
                 className="form-control mb-3"
+                id="subjectList"
+                style={{ display: 'none' }}
+              >
+                <option> -- Select Subject -- </option>
+                <option>Subject1</option>
+                <option>Subject2</option>
+                <option>Subject3</option>
+                <option>Subject4</option>
+                <option>Subject5</option>
+                <option>Subject6</option>
+                <option>Subject7</option>
+                <option>Subject8</option>
+                <option>Subject9</option>
+                <option>Subject10</option>
+              </select>
+              <select
+                className="form-control mb-3"
                 id="countryList"
                 style={{ display: 'none' }}
-                name="country"
               >
-                <option></option>
+                <option>-- Select Country --</option>
                 <option>Australia</option>
                 <option>Canada</option>
                 <option>Germany</option>

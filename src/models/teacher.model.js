@@ -30,6 +30,21 @@ const teacherSchema = new Schema(
       token: String,
       expiredAt: Date,
     },
+    subject: {
+      type: String,
+      required: true,
+    },
+    followers: [{ type: Schema.Types.ObjectId, ref: 'Student', unique: true }],
+    languages: String,
+    skills: String,
+    message: String,
+    video: String,
+    time: String,
+    price: Number,
+    city: String,
+    state: String,
+    instaId: String,
+    payment: [{ type: Schema.Types.ObjectId, ref: 'Transaction' }],
   },
   {
     timestamps: true,
@@ -37,6 +52,9 @@ const teacherSchema = new Schema(
 );
 teacherSchema.virtual('fullName').get(function () {
   return this.firstName + ' ' + this.lastName;
+});
+teacherSchema.virtual('followersCount').get(function () {
+  return this.followers.length;
 });
 const Teacher = mongoose.model('Teacher', teacherSchema);
 module.exports = Teacher;

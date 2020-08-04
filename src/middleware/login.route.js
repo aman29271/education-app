@@ -24,22 +24,28 @@ router.route('/verify').post(redirectHome, (req, res) => {
     // teacher verification
     person = Teacher;
   }
-  person.findOne({ email: username }, 'email +password', async (err, user) => {
-    if (err) {
-      res.status(200).json({ message: 'An Error Ocurred.', full_description: err });
-    }
-    if (user) {
-      const isMatched = await bcrypt.compare(password, user.password);
-      if (isMatched) {
-        req.session.userId = user._id;
-        req.session.user = user;
-        res.redirect('/profile');
+  person.findOne(
+    { email: username },
+    'email activationCode hasVerified +password',
+    async (err, user) => {
+      if (err) {
+        res.status(200).json({ message: 'An Error Ocurred.', full_description: err });
+      }
+      if (user) {
+        const isMatched = await bcrypt.compare(password, user.password);
+        if (isMatched) {
+          req.session.userId = user._id;
+          req.session.user = user;
+          req.session.student = student;
+          delete req.session.user.password;
+          res.redirect('/profile');
+        } else {
+          res.redirect('/login?message=User or password is not correct.');
+        }
       } else {
         res.redirect('/login?message=User or password is not correct.');
       }
-    } else {
-      res.redirect('/login?message=User or password is not correct.');
     }
-  });
+  );
 });
 module.exports = router;

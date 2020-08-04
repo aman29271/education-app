@@ -34,11 +34,12 @@ const VerifyCode = () => {
                       <div className="control">
                         <input
                           className="input"
-                          type="number"
+                          type="text"
+                          pattern="\d*"
                           minLength="6"
                           maxLength="6"
                           name="verificationCode"
-                          placeholder="123456"
+                          placeholder="Six digit verification code"
                           required
                         />
                       </div>

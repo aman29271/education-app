@@ -1,23 +1,20 @@
-const follower = document.getElementById('follower');
 const country = document.getElementById('countryList');
+const subject = document.getElementById('subjectList');
 const professional = document.getElementById('professional');
+const follower = document.getElementById('follower');
 
-const submitBtn = document.getElementById('submit');
-submitBtn.addEventListener('click', (e) => {
-  if (
-    document.getElementById('password').value !== document.getElementById('confirm_password').value
-  ) {
-    e.preventDefault();
-    const message = document.getElementById('message');
-    message.style.display = 'block';
-    message.textContent = 'Password Does not match';
-  }
-});
+professional.addEventListener('click', showSubjectList);
 follower.addEventListener('click', showCountryList);
 
-professional.addEventListener('click', () => {
-  professional.checked ? (country.style.display = 'none') : '';
-});
+function showSubjectList() {
+  subject.setAttribute('name', 'subject');
+  subject.style.display = professional.checked ? 'block' : 'none';
+  country.style.display = 'none';
+  country.removeAttribute('name');
+}
 function showCountryList() {
+  country.setAttribute('name', 'country');
   country.style.display = follower.checked ? 'block' : 'none';
+  subject.style.display = 'none';
+  subject.removeAttribute('name');
 }

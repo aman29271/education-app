@@ -7,13 +7,13 @@ const Subjects = require('./components/subjects');
 const TeacherList = require('./components/teacherList');
 const Layout = require('./components/layout');
 
-const Index = () => {
+const Index = ({ isLoggedIn }) => {
   return (
     <Layout>
       <CommonCSS />
       <link href="/css/main.css" rel="stylesheet" />
 
-      <Navbar isLoggedIn={false} />
+      <Navbar isLoggedIn={isLoggedIn} />
       <Subjects />
       <div className="container">
         <TeacherList data={[1]} />

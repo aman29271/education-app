@@ -13,7 +13,16 @@ router.route('/').get(redirectHome, (req, res) => {
   res.render('Register', { errors: { msg }, message });
 });
 router.route('/verify').post(redirectHome, async (req, res) => {
-  const { firstName, lastName, email, password, confirm_password, country } = req.body;
+  const {
+    firstName,
+    lastName,
+    email,
+    password,
+    confirm_password,
+    country,
+    subject,
+    category,
+  } = req.body;
   const errors = { msg: [] };
   if (password !== confirm_password) {
     errors.msg.push('Password do not match.');
@@ -35,7 +44,7 @@ router.route('/verify').post(redirectHome, async (req, res) => {
   const body = `Thanks for registering with us. Please note your verification code for login. Your verification code is ${number}`;
   let person = '';
   const hashedPassword = await bcrypt.hash(password, BCRYPT_SALT_ROUND);
-  if (country !== '') {
+  if (category === 'student') {
     // student registration
     person = new Student({
       firstName,
@@ -45,16 +54,19 @@ router.route('/verify').post(redirectHome, async (req, res) => {
       country,
       activationCode: number,
     });
-  }
-  // teacher registration
+  } else {
+    // teacher registration
 
-  person = new Teacher({
-    firstName,
-    lastName,
-    email,
-    password: hashedPassword,
-    activationCode: number,
-  });
+    person = new Teacher({
+      firstName,
+      lastName,
+      email,
+      password: hashedPassword,
+      activationCode: number,
+      subject,
+    });
+  }
+
   await person.save();
   send('admin@example.com', email, 'Thanks for registering with us.', body);
   res.redirect('/register?message=' + 'You have successfully registered.');

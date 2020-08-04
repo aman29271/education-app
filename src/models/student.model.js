@@ -34,11 +34,21 @@ const studentSchema = new Schema(
       token: String,
       expiredAt: Date,
     },
+    payment: [{ type: Schema.Types.ObjectId, ref: 'Transaction' }],
+    following: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Teacher',
+      },
+    ],
   },
   { timestamps: true }
 );
 studentSchema.virtual('fullName').get(function () {
   return this.firstName + ' ' + this.lastName;
+});
+studentSchema.virtual('followingCount').get(function () {
+  return this.following.length;
 });
 const Student = mongoose.model('Student', studentSchema);
 module.exports = Student;

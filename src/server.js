@@ -5,6 +5,8 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
+const mongoose = require('mongoose');
 
 const app = new express();
 const server = http.createServer(app);
@@ -15,7 +17,9 @@ const { redirectHome } = require('./utils/redirect');
 const registerRoute = require('./middleware/register.route');
 const profileRouter = require('./middleware/profile.route');
 const loginRoute = require('./middleware/login.route');
+const connectDb = require('./common/connect');
 
+connectDb();
 app
   .disable('x-powered-by')
   .set('views', path.resolve(__dirname, 'views'))
@@ -36,10 +40,14 @@ app
         maxAge: 24 * 60 * 60 * 1000,
         secure,
       },
+      store: new MongoStore({ mongooseConnection: mongoose.connection }),
     })
   )
-  .get('/', redirectHome, (req, res) => {
-    res.render('Index');
+  .get('/', (req, res) => {
+    if (req.session.userId) {
+      return res.render('Index', { isLoggedIn: true });
+    }
+    res.render('Index', { isLoggedIn: false });
   })
   .use('/login', loginRoute)
   .use('/register', registerRoute)
