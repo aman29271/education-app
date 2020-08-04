@@ -13,7 +13,6 @@ const server = http.createServer(app);
 const PORT = process.env.PORT || 3000;
 const secret = process.env.SECRET || 'hello brother';
 const secure = process.env.NODE_ENV === 'production';
-const { redirectHome } = require('./utils/redirect');
 const registerRoute = require('./middleware/register.route');
 const profileRouter = require('./middleware/profile.route');
 const loginRoute = require('./middleware/login.route');
@@ -38,6 +37,7 @@ app
       saveUninitialized: false,
       cookie: {
         maxAge: 24 * 60 * 60 * 1000,
+        httpOnly: true,
         secure,
       },
       store: new MongoStore({ mongooseConnection: mongoose.connection }),
