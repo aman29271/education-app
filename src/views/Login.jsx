@@ -45,7 +45,6 @@ const Login = ({ message }) => {
                   />
                 </div>
               </div>
-              <p> Are you a student ?</p>
               <div className="form-check form-check-inline col-md-5 col-lg-5 m-0 p-0 pl-4 mb-3">
                 <input
                   className="form-check-input"
@@ -56,7 +55,7 @@ const Login = ({ message }) => {
                   defaultChecked
                 />
                 <label className="form-check-label" htmlFor="teacher">
-                  Yes
+                  Student
                 </label>
               </div>
               <div className="form-check form-check-inline col-md-5 col-lg-5 m-0 p-0 pl-4 mb-3">
@@ -68,7 +67,7 @@ const Login = ({ message }) => {
                   value="false"
                 />
                 <label className="form-check-label" htmlFor="student">
-                  No
+                  Teacher
                 </label>
               </div>
               <div className="form-group">
